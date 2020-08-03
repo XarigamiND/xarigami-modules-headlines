@@ -1,0 +1,48 @@
+<xar:if condition="xarModGetVar('headlines', 'adminajax')">
+    <xar:base-include-javascript filename="xmlhttprequest.js" module="base" position="body"/>
+  <xar:set name="onclick">"return loadContent(this.href,'divload');"</xar:set>
+<xar:else/>
+  <xar:set name="onclick">"return true;"</xar:set>
+</xar:if>
+<div class="xar-mod-page">
+    <div class="xar-mod-head">
+        <xar:if condition="!xarRequestIsAJAX()">
+          <xar:template type="module"  module="base" file="admin-menu" />
+        </xar:if>
+    </div>
+    <div id="divload" class="xar-mod-body">
+        <h1>
+            <xar:mlstring>Delete Headline</xar:mlstring>
+        </h1>
+        <div class="xar-mod-content">
+        <form method="post" action="#xarModURL('headlines', 'admin', 'delete')#" enctype="application/x-www-form-urlencoded" >
+            <fieldset>
+                <legend><xar:mlstring>Confirm deletion of Headline</xar:mlstring></legend>
+                 <p class="xar-form-input-wrapper">
+                    <label class="xar-form-label"><xar:mlstring>Feed ID:</xar:mlstring></label>
+                    #$hid#
+                </p>
+                <p class="xar-form-input-wrapper">
+                    <label class="xar-form-label"><xar:mlstring>Feed Name:</xar:mlstring></label>
+                    #$title#
+                </p>
+                <p class="xar-form-input-wrapper">
+                    <label class="xar-form-label"><xar:mlstring>Feed URL:</xar:mlstring></label>
+                    #$url#
+                </p>
+                <div class="xar-form-footer">
+                    <input type="hidden" name="authid" value="#$authid#" />
+                    <input type="hidden" name="hid" id="hid" value="#$hid#" />
+                    <input type="hidden" name="confirm" id="confirm" value="1"/>
+                    <input type="hidden" name="confirmation" id="confirmation" value="1"/>
+                    <input type="submit" value="#$submitlabel#"  tabindex="1" />
+
+                    <a href="#xarModURL('headlines', 'admin', 'view')#" onclick="#$onclick#" >
+                        <xar:mlstring>Cancel deletion of Headline</xar:mlstring>
+                    </a>
+                </div>
+            </fieldset>
+        </form>
+        </div>
+    </div>
+</div>

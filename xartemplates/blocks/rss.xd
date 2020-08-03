@@ -1,0 +1,69 @@
+<xar:if condition="empty($warning)">
+    <xar:if condition="!empty($show_chantitle) or ($show_chandesc and !empty($chandesc))">
+        <div>
+            <xar:if condition="$show_chantitle">
+                <h4><xar:mlstring>Headlines from:</xar:mlstring></h4>
+                <a href="#xarVarPrepForDisplay($chanlink)#" title="#$chantitle#" rel="external">#$chantitle#</a>
+            </xar:if>
+            <xar:if condition="$show_chandesc and !empty($chandesc)">
+                <p class="xar-sub">#$chandesc#</p>
+            </xar:if>
+            <xar:if condition="$show_chanimage && !empty($chanimage)">
+                <div>
+                    <a href="#$chanimage['link']#" title="#$chanimage['title']#" rel="external">
+                        <img src="#$chanimage['url']#" alt="#$chanimage['title']#" />
+                    </a>
+                </div>
+            </xar:if>
+        </div>
+    </xar:if>
+
+    <xar:if condition="!empty($feedcontent)">
+        <ul>
+            <xar:loop name="$feedcontent">
+                <li>
+                   <xar:if condition="$show_itemimage">
+                        <xar:if condition="isset($loop:item['thumbnails']) && !empty($loop:item['thumbnails'])">
+                            <xar:foreach in="$loop:item['thumbnails']" value="$thumblink">
+                                <img src="#$thumblink#" alt="#$loop:item['title']#" />
+                            </xar:foreach>
+                        <xar:elseif condition="isset($loop:item['image']) && !empty($loop:item['image'])" />
+                            <img src="#$loop:item['image']#" alt="#$loop:item['title']#" />
+                        </xar:if>
+                    </xar:if>
+                    <xar:if condition="!empty($loop:item.link)">
+                        <a href="#xarVarPrepForDisplay($loop:item.link)#" title="#$loop:item.title#" rel="external">#$loop:item.title#</a>
+                    <xar:else />
+                        <strong>#xarVarPrepHTMLDisplay($loop:item.title)#</strong>
+                    </xar:if>
+                    <xar:if condition="!empty($loop:item.date)">
+                        <p>
+                        #xarLocaleGetFormattedDate('long',$loop:item.date)#
+                        </p>
+                    </xar:if>
+                    <xar:if condition="!empty($loop:item['categories']) && $show_itemcats">
+                    <p class="xar-sub">|
+                    <xar:foreach in="$loop:item['categories']" key="$catkey" value="$chancat">
+                        <xar:if condition="!empty($chancat['term'])">
+                            #xarVarPrepForDisplay($chancat['term'])# |
+                        </xar:if>
+                    </xar:foreach>
+                    </p>
+                    </xar:if>
+                    <xar:if condition="!empty($show_desc)">
+                        <xar:if condition="!empty($loop:item.description)">
+                            <p class="xar-sub">#xarVarPrepHTMLDisplay($loop:item.description)#</p>
+                        </xar:if>
+                    </xar:if>
+                </li>
+            </xar:loop>
+        </ul>
+    </xar:if>
+    <xar:if condition="isset($linkhid) && !empty($linkhid)">
+        <div class="xar-align-right xar-sub">
+            [<a href="#xarModURL('headlines', 'user', 'view', array('hid' => $linkhid))#"><xar:mlstring>Browse Headlines</xar:mlstring></a>]
+        </div>
+    </xar:if>
+<xar:else />
+    <div>#xarVarPrepForDisplay($warning)#</div>
+</xar:if>

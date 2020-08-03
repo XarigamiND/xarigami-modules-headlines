@@ -1,0 +1,70 @@
+<xar:base-include-javascript filename="confirmlink.js" module="base" />
+<xar:if condition="xarModGetVar('headlines', 'adminajax')">
+  <xar:base-include-javascript filename="xmlhttprequest.js" module="base" position="body"/>
+  <xar:set name="onclick">"return loadContent(this.href,'divload');"</xar:set>
+<xar:else/>
+  <xar:set name="onclick">"return true;"</xar:set>
+</xar:if>
+<div class="xar-mod-page">
+    <div class="xar-mod-head">
+        <xar:if condition="!xarRequestIsAJAX()">
+          <xar:template type="module"  module="base" file="admin-menu" />
+        </xar:if>
+    </div>
+    <div id="divload" class="xar-mod-body">
+        <h1>
+            <xar:mlstring>View Headlines</xar:mlstring>
+        </h1>
+        <div class="xar-mod-content">
+            <form method="post" action="#xarModUrl('headlines', 'admin', 'settings')#">
+                <table class="xar-items">
+                    <thead>
+                        <tr>
+                            <th class="xar-align-left">
+                                <xar:mlstring>Headline URL</xar:mlstring>
+                            </th>
+                             <th class="xar-align-center">
+                                <xar:mlstring>Order</xar:mlstring>
+                            </th>
+                             <th class="xar-align-center">
+                                <xar:mlstring>Actions</xar:mlstring>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <xar:set name="rowclass">'xar-norm'</xar:set>
+                    <xar:loop name="$items">
+                        <tr class="#$rowclass#">
+                            <td class="xar-align-left">
+                                <xar:if condition="!empty($loop:item['title'])">
+                                    <strong>#xarVarPrepForDisplay($loop:item['title'])#</strong><br />
+                                </xar:if>
+                                <xar:if condition="!empty($loop:item['desc'])">
+                                    <em>#xarVarPrepForDisplay($loop:item['desc'])#</em><br />
+                                </xar:if>
+                                <a href="#xarVarPrepForDisplay($loop:item['url'])#">#xarVarPrepForDisplay($loop:item['url'])#</a>
+                            </td>
+                            <td class="xar-align-center">
+                                #$loop:item['order']#
+                            </td>
+                            <td class="xar-item-actions">
+                                <a href="#xarModURL('headlines', 'user', 'view', array('hid' => $loop:item['hid']))#" onclick="#$onclick#"><xar:mlstring>View</xar:mlstring></a> |
+                                <a href="#$loop:item['editurl']#"  onclick="#$onclick#"><xar:mlstring>Edit</xar:mlstring></a>  |
+                                <a href="#$loop:item['deleteurl']#" onclick="#$loop:item['javascript']# "><xar:mlstring>Delete</xar:mlstring></a>
+                            </td>
+                        </tr>
+                        <xar:set name="rowclass">$rowclass == 'xar-norm' ? 'xar-alt' : 'xar-norm'</xar:set>
+                    </xar:loop>
+                    </tbody>
+                </table>
+            </form>
+            <xar:if condition="!empty($pager)">
+            <div class="xar-form-footer">
+            #$pager#
+            </div>
+            <xar:else />
+            <p></p>
+            </xar:if>
+        </div>
+    </div>
+</div>

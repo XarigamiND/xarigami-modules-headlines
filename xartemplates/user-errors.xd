@@ -1,0 +1,26 @@
+<!-- License: GPL http://www.gnu.org/copyleft/gpl.html -->
+<div class="xar-mod-head">
+    <span class="xar-mod-title"><xar:mlstring>Headlines Error</xar:mlstring></span>
+</div>
+<div class="xar-mod-body">
+    <fieldset>
+        <legend><xar:mlstring>Problem with Feed</xar:mlstring></legend>
+        <img src="#xarTplGetImage('user-error.png','base')#" alt="#xarML('System Message')#" width="96" height="96" class="xar-module-icon"/>
+        <xar:if condition="!isset($errortype)">
+            <div class="xar-padding-thick">
+                <xar:mlstring>No error message is available. </xar:mlstring>
+            <br />
+                <xar:mlstring>Please contact the system administrator.</xar:mlstring>
+            </div>
+        <xar:elseif condition="$errortype eq 'nodata'"/>
+         <xar:set name="var1">nl2br($var1)</xar:set>
+            <div class="xar-padding-thick">#$var1#</div>
+        <xar:else />
+            <div class="xar-padding-thick">
+                <xar:mlstring>No error message is available.</xar:mlstring>
+                <br />
+                <xar:mlstring>Please contact the system administrator.</xar:mlstring>
+            </div>
+        </xar:if>
+    </fieldset>
+</div>

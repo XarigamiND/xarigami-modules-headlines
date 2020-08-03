@@ -1,0 +1,98 @@
+<xar:if condition="xarModGetVar('headlines', 'userajax')">
+  <xar:if condition="!xarModIsAvailable('dojo')">
+    <xar:base-include-javascript filename="xmlhttprequest.js" module="base" position="body"/>
+  </xar:if>
+  <xar:set name="onclick">"return loadContent(this.href,'notsogoodbutok');"</xar:set>
+<xar:else/>
+  <xar:set name="onclick">"return true;"</xar:set>
+</xar:if>
+<div class="xar-mod-page">
+    <div class="xar-mod-head">
+        <xar:if condition="!xarRequestIsAJAX()">
+          <xar:template type="module"  module="base" file="user-menu" />
+        </xar:if>
+    </div>
+    <div id="notsogoodbutok" class="xar-mod-body">
+        <h1>
+            <xar:mlstring>Headlines</xar:mlstring>
+        </h1>
+        <div class="xar-mod-content">
+            <xar:if condition="xarModIsHooked('categories','headlines')">
+                <xar:categories-navigation layout="trails" showchildren="1" module="headlines" func="main" showcatcount="1" catid="$catid" />
+            </xar:if>
+            <xar:if condition="xarSecurityCheck('EditHeadlines', 0) and xarModGetVar('headlines','importpubtype')">
+                <xar:set name="showimport">1</xar:set>
+            <xar:else/>
+                <xar:set name="showimport">0</xar:set>
+            </xar:if>
+            <xar:loop name="$indlinks">
+                <div class="xar-alt-outline xar-margin-thickbottom">
+                <div class="xar-standard-box-padding xar-clearboth">
+                <xar:if condition="isset($loop:item['image']) AND !empty($loop:item['image']) AND xarModGetVar('headlines', 'showchanimage')">
+                    <a href="#$loop:item['image']['link']#" title="#$loop:item['image']['title']#">
+                        <img class="xar-floatleft" style="padding:0px 1em 1em 0px;" src="#$loop:item['image']['url']#" alt="#$loop:item['image']['title']#" />
+                    </a>
+                </xar:if>
+                <xar:if condition="!empty($loop:item['chanlink'])">
+                    <h3>
+                        <a href="#$loop:item['chanlink']#" title="#$loop:item['chantitle']#">
+                            #$loop:item['chantitle']#
+                        </a>
+                    </h3>
+                    <div class="xar-standard-box-padding">#$loop:item['chandesc']#</div>
+                <xar:else/>
+                    <h3>
+                        #$loop:item['chantitle']#
+                    </h3>
+                    <div class="xar-standard-box-padding">#$loop:item['chandesc']#</div>
+                </xar:if>
+                <div class="xar-sub">
+                    <xar:set name="$lastseen">#$loop:item['lastitem']#</xar:set>
+                    <xar:mlstring>Last updated</xar:mlstring> #xarLocaleGetFormattedDate('medium',$lastseen)# #xarLocaleGetFormattedTime('medium',$lastseen)#
+                </div>
+                </div>
+                <div class="xar-alt xar-clearboth">[
+                <xar:if condition="!empty($loop:item['viewlink'])">
+                    <xar:if condition="$showimport ne '1'">
+                        <xar:set name="headlink"><xar:mlstring>Browse Latest Headlines</xar:mlstring></xar:set>
+                    <xar:else />
+                        <xar:set name="headlink"><xar:mlstring>Review Headlines for Import</xar:mlstring></xar:set>
+                    </xar:if>
+                    <a href="#$loop:item['viewlink']#" title="#$headlink#" onclick="#$onclick#">#$headlink#</a>
+                </xar:if>
+
+                <xar:if condition="!empty($loop:item['comments'])">
+                    | #$loop:item['comments']#
+                </xar:if>
+                <xar:if condition="!empty($loop:item['hitcount'])">
+                    | #$loop:item['hitcount']#
+                </xar:if>
+                 <xar:if condition="!empty($loop:item['ratings'])">
+                    | #$loop:item['ratings']#
+                </xar:if>
+                <xar:if condition="!empty($showimport) and !empty($loop:item['importlink'])">
+                    <xar:set name="implabel"><xar:mlstring>Import All Headlines to Queue</xar:mlstring></xar:set>
+                    | <a href="#$loop:item['importlink']#" title="#$implabel#">#$implabel#</a>
+                </xar:if>
+                <xar:if condition="!empty($loop:item['keywords'])">
+                    | <xar:mlstring>Keywords</xar:mlstring>:
+                    <xar:loop name="$loop:item['keywords']" id="word">
+                        <a href="#xarModURL('keywords', 'user', 'main', array('keyword' => $loop:word:item))#" title="#$loop:word:item#">#$loop:word:item#</a>
+                        <xar:if condition="$loop:word:index != (count($loop:item['keywords'])-1)">
+                        ,
+                        </xar:if>
+                    </xar:loop>
+                </xar:if>
+                &nbsp;]</div>
+                </div>
+            </xar:loop>
+            <div class="xar-align-center">#$pager#</div>
+            <xar:comment>
+            <xar:template type="module" file="user-menu" />
+            <p>
+            <a href="&xar-modurl-headlines-user-my;"><xar:mlstring>My headlines</xar:mlstring></a>
+            </p>
+            </xar:comment>
+        </div>
+    </div>
+</div>

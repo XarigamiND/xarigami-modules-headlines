@@ -1,0 +1,61 @@
+<xar:if condition="xarModGetVar('headlines', 'userajax') eq '1'">
+  <xar:if condition="!xarModIsAvailable('dojo')">
+    <xar:base-include-javascript filename="xmlhttprequest.js" module="base" position="body"/>
+  </xar:if>
+  <xar:set name="onclick">"return loadContent(this.href,'notsogoodbutok');"</xar:set>
+<xar:else/>
+  <xar:set name="onclick">"return true;"</xar:set>
+</xar:if>
+<div class="xar-mod-page">
+    <div class="xar-mod-head">
+        <xar:if condition="!xarRequestIsAJAX()">
+          <xar:template type="module"  module="base" file="user-menu" />
+        </xar:if>
+    </div>
+    <div id="notsogoodbutok" class="xar-mod-body">
+        <h1>
+            <xar:mlstring>My Headlines</xar:mlstring>
+        </h1>
+        <div class="xar-mod-content">
+            <xar:if condition="!empty($config)">
+                <form method="post" action="&xar-modurl-headlines-user-my;">
+                    <input type="hidden" name="config" value="2" />
+                    <select name="feedlist[]" id="feedlist" multiple="multiple">
+                        <xar:foreach in="$links" key="$hid" value="$url">
+                            <xar:if condition="!empty($feedlist) and in_array($hid,$feedlist)">
+                                <option value="#$hid#" selected="selected">#$url#</option>
+                            <xar:else/>
+                                <option value="#$hid#">#$url#</option>
+                            </xar:if>
+                        </xar:foreach>
+                    </select>
+                    <input type="hidden" name="authid" value="#xarSecGenAuthKey()#" />
+                    <br/>
+                    <input type="submit" name="confirm" value="#xarML('Submit')#" />
+                </form>
+            </xar:if>
+
+            <xar:if condition="empty($feedlist)">
+                <xar:mlstring>No headlines selected</xar:mlstring>
+            <xar:else/>
+                <xar:comment> arrange the layout of the different blocks as you prefer </xar:comment>
+                <xar:foreach in="$feedlist" value="$feed">
+                    <xar:if condition="!empty($links[$feed])">
+                        <div>
+                        <xar:comment> adapt the block parameters as you prefer </xar:comment>
+                        <xar:block module="headlines" type="rss" rssurl="$links[$feed]" maxitems="5" show_chantitle="0" show_chandesc="0" showdescriptions="0" />
+                        </div>
+                    </xar:if>
+                </xar:foreach>
+            </xar:if>
+
+            <p>
+            [
+            <a href="#xarModURL('headlines','user','my',array('config' => 1))#" onclick="#$onclick#"><xar:mlstring>Configure my headlines</xar:mlstring></a>
+            |
+            <a href="#xarModURL('headlines', 'user', 'main')#" onclick="#$onclick#"><xar:mlstring>Back to main headlines</xar:mlstring></a>
+            ]
+            </p>
+        </div>
+    </div>
+</div>
