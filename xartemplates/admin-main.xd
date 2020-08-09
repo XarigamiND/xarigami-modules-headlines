@@ -238,16 +238,8 @@
                 feedParser was created due to the lack of a good, flexible, class-based RSS feed parser for PHP. It has been built as a class, and currently handles RSS 0.91, RSS 0.92, RSS 0.93, RSS 1.0, and RSS 2.0 feeds. For channels it grabs the title, description, link, and creator. For items it grabs the title, description, link, and date. It also provides a form of the date converted into the local timezone to facilitate chronological sorting of items. The dates are provided in UNIX timestamp format for easy manipulation by other PHP functions. </xar:mlstring>
             </p>
             <h3><xar:mlstring>Further Information</xar:mlstring></h3>
-            <p>
-                <xar:mlstring>Extended information about this module can be found at </xar:mlstring><a title="#xarML('Headlines Module - Xaraya Extension 777')#" href="http://www.xaraya.com/index.php/release/777.html">Xaraya Extension and Releases</a>.
-            </p>
             <ul>
-                <li>
-                    <xar:mlstring> Click on Version History tab at the bottom to get the latest release information.</xar:mlstring>
-                </li>
-                <li>
-                    <xar:mlstring>Related tutorials and documentation on Headlines found at</xar:mlstring> <a href="http://www.xaraya.com/index.php/keywords/headlines/" title="#xarML('Related documentation on Headlines')#" rel="external"><xar:mlstring>Xaraya Documentation.</xar:mlstring></a>
-                </li>
+                <li><xar:mlstring>Headlines Extension page</xar:mlstring> <xar:mlstring>(there is no project page yet)</xar:mlstring></li>
             </ul>
             <p class="xar-sub">
                 <strong>&nbsp;<xar:mlstring>Headlines module Overview</xar:mlstring></strong><br />&nbsp;<xar:mlstring>Version</xar:mlstring> 1.2.1&nbsp; 2008-04-24
