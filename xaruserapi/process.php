@@ -134,8 +134,10 @@ function headlines_userapi_process($args)
 
         if (!empty($links['desc'])){
             $data['chandesc'] = $links['desc'];
-        } else {
+        } else if(!empty($info['channel']['description'])) {
             $data['chandesc'] = $info['channel']['description'];
+        } else {
+            $data['chandesc'] = '';
         }
 
         $data['chanlink'] = $info['channel']['link'];

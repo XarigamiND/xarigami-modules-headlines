@@ -14,7 +14,7 @@
 function headlines_admin_view()
 {
     // Get parameters from whatever input we need
-    if (!xarVarFetch('startnum','str:1:',$startnum,'',XARVAR_NOT_REQUIRED)) return;
+    if (!xarVarFetch('startnum','str:1:',$startnum,1,XARVAR_NOT_REQUIRED)) return;
     $data['items'] = array();
     $data['menulinks'] = xarModAPIFunc('headlines','admin','getmenulinks');
     // Specify some labels for display
