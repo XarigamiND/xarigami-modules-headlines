@@ -26,13 +26,6 @@
             <xar:mlstring>Edit Headline</xar:mlstring>
         </h1>
         <div class="xar-mod-content">
-            <p>
-                <a href="http://www.syndic8.com" rel="external">
-                    <xar:mlstring>
-                        List of some other RSS feeds
-                    </xar:mlstring>
-                </a>
-            </p>
             <form action="#xarModURL('headlines', 'admin', 'update')#" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return xar_base_formCheck(this, base_fieldRequired, base_fieldDescription);">
                 <fieldset>
                     <legend>
